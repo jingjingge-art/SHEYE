@@ -1,4 +1,4 @@
-name: Update 8TV IPTV
+name: Update ShanghaiEye IPTV
 
 on:
   workflow_dispatch:
@@ -11,7 +11,7 @@ permissions:
   contents: write
 
 concurrency:
-  group: update-8tv-${{ github.ref }}
+  group: update-shanghaieye-${{ github.ref }}
   cancel-in-progress: false
 
 jobs:
@@ -33,7 +33,7 @@ jobs:
           pip install playwright
           python -m playwright install --with-deps chromium
 
-      - name: Run 8TV collector
+      - name: Run ShanghaiEye collector
         run: python update_8tv.py
 
       - name: Commit updated playlist
@@ -41,10 +41,10 @@ jobs:
           git config user.name "github-actions[bot]"
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
 
-          git add 8tv.txt
+          git add shanghaieye.txt
 
           if ! git diff --cached --quiet; then
-            git commit -m "Update 8TV IPTV stream"
+            git commit -m "Update ShanghaiEye IPTV stream"
             git push origin "HEAD:${GITHUB_REF_NAME}"
           else
             echo "No changes detected."
