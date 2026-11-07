@@ -3,9 +3,7 @@
 
 import asyncio
 import os
-import re
 import sys
-import html
 import logging
 import tempfile
 
@@ -19,9 +17,9 @@ from playwright.async_api import async_playwright
 
 SOURCE_URL = "https://www.shanghaieye.cn/Live"
 
-OUTPUT_FILE = "8tv.txt"
+OUTPUT_FILE = "shanghaieye.txt"
 
-CHANNEL_NAME = "8tv"
+CHANNEL_NAME = "shanghaieye"
 
 GENRE_HEADER = "iptv,#genre#"
 
@@ -239,7 +237,7 @@ async def collect_stream():
         # Open source page
         # ------------------------------------------
 
-        logging.info("Opening 8TV source page")
+        logging.info("Opening ShanghaiEye source page")
 
         try:
 
@@ -397,7 +395,7 @@ def save_output(stream_url):
 
     fd, temp_path = tempfile.mkstemp(
         dir=output_dir,
-        prefix=".8tv_",
+        prefix=".shanghaieye_",
         suffix=".tmp"
     )
 
@@ -418,7 +416,7 @@ def save_output(stream_url):
         )
 
         logging.info(
-            "8TV playlist updated successfully"
+            "ShanghaiEye playlist updated successfully"
         )
 
     except Exception:
@@ -438,7 +436,7 @@ async def main():
     logging.info("=" * 50)
 
     logging.info(
-        "8TV IPTV Dynamic Collector Started"
+        "ShanghaiEye IPTV Dynamic Collector Started"
     )
 
     logging.info(
@@ -493,7 +491,7 @@ async def main():
         )
 
         logging.warning(
-            "Old 8tv.txt has been preserved"
+            "Old shanghaieye.txt has been preserved"
         )
 
         return 1
@@ -503,4 +501,4 @@ if __name__ == "__main__":
 
     sys.exit(
         asyncio.run(main())
-        )
+    )
