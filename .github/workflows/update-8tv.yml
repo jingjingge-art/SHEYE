@@ -1,0 +1,51 @@
+name: Update 8TV IPTV
+
+on:
+  workflow_dispatch:
+
+  schedule:
+    # Every 10 minutes (UTC)
+    - cron: "*/10 * * * *"
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-8tv-${{ github.ref }}
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 8
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install Playwright
+        run: |
+          pip install playwright
+          python -m playwright install --with-deps chromium
+
+      - name: Run 8TV collector
+        run: python update_8tv.py
+
+      - name: Commit updated playlist
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+
+          git add 8tv.txt
+
+          if ! git diff --cached --quiet; then
+            git commit -m "Update 8TV IPTV stream"
+            git push origin "HEAD:${GITHUB_REF_NAME}"
+          else
+            echo "No changes detected."
+          fi
