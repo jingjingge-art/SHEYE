@@ -1,2 +1,2 @@
 iptv,#genre#
-shanghaieye,https://live.shanghaieye.cn/live/24h.m3u8?auth_key=1795668230-0-0-33e238423b1d3a8c36b2d0c16c367b26
+shanghaieye,https://live.shanghaieye.cn/live/24h.m3u8?auth_key=1795702579-0-0-90f3aa18afba8c017343b72f1ce124eb
